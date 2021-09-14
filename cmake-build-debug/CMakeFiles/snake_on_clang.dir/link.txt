@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/snake_on_clang.dir/main.c.o  -o snake_on_clang 

@@ -1,0 +1,3 @@
+/home/evgesha/CLionProjects/snake_on_clang/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/evgesha/CLionProjects/snake_on_clang/cmake-build-debug/CMakeFiles/snake_on_clang.dir
+/home/evgesha/CLionProjects/snake_on_clang/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -4,9 +4,6 @@
 
 char** board;
 
-
-
-
 void init(){
     initscr();
     savetty();
@@ -27,23 +24,34 @@ void my_finish(){
 }
 
 void init_board(){
+    int i, j;
     board = (char**) malloc(LINES * sizeof(char*));
     if(!board){
         my_finish();
     }
     for(int i=0;i<LINES;i++){
         board[i] = (char*) malloc(COLS * sizeof(char));
+        if(!board[i]){
+            my_finish();
+        }
+    }
+    for(i=0;i<LINES;i++){
+        for(j=0;j<COLS;j++){
+            board[i][j] = '*';
+        }
     }
 }
 
-void write_some_thing(){
-
-}
-
 int main() {
-//    printf("Hello, World!\n");
+    printf("Hello, World!\n");
     init();
     init_board();
-//    finish();
+    move(2,0);
+    addch('*');
+    napms(3000);
+    wgetch(stdscr);
+    napms(3000);
+    my_finish();
+    endwin();
     return 0;
 }

@@ -1,9 +1,27 @@
 #include <stdio.h>
 #include <curses.h>
 #include <stdlib.h>
+#include <time.h>
 
+#define MAX_SNAKE_SIZE 500
 char** board;
+typedef struct Coord{
+    int row;
+    int col;
 
+}Coord;
+Coord snake[MAX_SNAKE_SIZE];
+int init_snake_size = 1;
+int snake_length = 5;
+
+int lines, cols;
+
+Coord get_random_pos(){
+    Coord res;
+    res.row = rand() % lines;
+    res.col = rand() % cols;
+    return res;
+}
 void init(){
     initscr();
     savetty();
@@ -25,6 +43,8 @@ void my_finish(){
 
 void init_board(){
     int i, j;
+    lines = LINES;
+    cols = COLS;
     board = (char**) malloc(LINES * sizeof(char*));
     if(!board){
         my_finish();
@@ -41,16 +61,21 @@ void init_board(){
         }
     }
 }
+void put(int row, int col, char ch){
+    board[row][col] =ch;
+    move(row,col);
+    addch(ch);
+
+}
 
 int main() {
-    printf("Hello, World!\n");
+    srand((unsigned) time(NULL));
     init();
     init_board();
-    move(2,0);
-    addch('*');
-    napms(3000);
-    wgetch(stdscr);
-    napms(3000);
+    snake[0] = get_random_pos();
+    while(1){
+
+    }
     my_finish();
     endwin();
     return 0;

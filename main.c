@@ -4,6 +4,17 @@
 #include <time.h>
 
 #define MAX_SNAKE_SIZE 500
+#define POINT *
+// ------ACTIONS--------//
+#define LEFT 0
+#define RIGHT 1
+#define UP 2
+#define DOWN 3
+#define STOP 4
+
+// initial snake position
+int direction = STOP;
+
 char** board;
 typedef struct Coord{
     int row;
@@ -67,14 +78,39 @@ void put(int row, int col, char ch){
     addch(ch);
 
 }
+void change_direction(){
+    int keypres;
+    keypres = wgetch(stdscr);
+    if(keypres == ERR){
+        return;
+    }
+    else if(keypres == 'a'){
+        direction = LEFT;
+    }
+    else if(keypres == 'd'){
+        direction = RIGHT;
+    }
+    else if(keypres == 's'){
+        direction = DOWN;
+    }
+    else if(keypres == 'w'){
+        direction = UP;
+    }
+    else if(keypres == 'q'){
+        my_finish();
+    }
+}
 
 int main() {
     srand((unsigned) time(NULL));
     init();
     init_board();
     snake[0] = get_random_pos();
+    put(snake[0].row, snake[0].col, POINT);
     while(1){
-
+        logio();
+        wgetch(stdscr);
+        napms(50);
     }
     my_finish();
     endwin();

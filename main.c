@@ -2,6 +2,7 @@
 #include <curses.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define MAX_SNAKE_SIZE 500
 #define POINT *
@@ -12,7 +13,7 @@
 #define DOWN 3
 #define STOP 4
 
-// initial snake position
+// initial snake position//
 int direction = STOP;
 
 char** board;
@@ -72,12 +73,13 @@ void init_board(){
         }
     }
 }
+
 void put(int row, int col, char ch){
     board[row][col] =ch;
     move(row,col);
     addch(ch);
-
 }
+
 void change_direction(){
     int keypres;
     keypres = wgetch(stdscr);
@@ -101,6 +103,35 @@ void change_direction(){
     }
 }
 
+void change_head(){
+    if (direction == RIGHT){
+        snake[0].col++;
+    }
+    else if(direction == LEFT){
+        snake[0].col--;
+    }
+    else if (direction ==UP){
+        snake[0].row --;
+    }
+    else if(direction == DOWN){
+        snake[0].col ++;
+    }
+}
+
+void logic(){
+    change_direction();
+    memmove(&snake[1], &snake[0], sizeof(Coord) * init_snake_size);
+    change_head();
+    put(snake[0].row, snake[0].col, POINT);
+    if(init_snake_size < snake_length){
+        init_snake_size ++;
+    }
+    else{
+        put(snake[init_snake_size].row, snake[init_snake_size].col, ' ');
+
+    }
+}
+
 int main() {
     srand((unsigned) time(NULL));
     init();
@@ -108,7 +139,7 @@ int main() {
     snake[0] = get_random_pos();
     put(snake[0].row, snake[0].col, POINT);
     while(1){
-        logio();
+        change_direction();
         wgetch(stdscr);
         napms(50);
     }

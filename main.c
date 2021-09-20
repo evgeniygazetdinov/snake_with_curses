@@ -5,8 +5,7 @@
 #include <string.h>
 
 #define MAX_SNAKE_SIZE 500
-#define POINT *
-// ------ACTIONS--------//
+#define POINT '*'
 #define LEFT 0
 #define RIGHT 1
 #define UP 2
@@ -75,7 +74,7 @@ void init_board(){
 }
 
 void put(int row, int col, char ch){
-    board[row][col] =ch;
+    board[row][col] = ch;
     move(row,col);
     addch(ch);
 }
@@ -122,7 +121,7 @@ void logic(){
     change_direction();
     memmove(&snake[1], &snake[0], sizeof(Coord) * init_snake_size);
     change_head();
-    put(snake[0].row, snake[0].col, POINT);
+    put(snake[0].row, snake[0].col,POINT);
     if(init_snake_size < snake_length){
         init_snake_size ++;
     }
@@ -140,6 +139,9 @@ int main() {
     put(snake[0].row, snake[0].col, POINT);
     while(1){
         change_direction();
+        if(direction != STOP){
+            logic();
+        }
         wgetch(stdscr);
         napms(50);
     }

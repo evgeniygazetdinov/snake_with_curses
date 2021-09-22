@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <curses.h>
 #include <stdlib.h>
 #include <time.h>
@@ -33,6 +32,17 @@ Coord get_random_pos(){
     res.col = rand() % cols;
     return res;
 }
+
+void put(int row, int col, char ch){
+    board[row][col] = ch;
+    move(row,col);
+    addch(ch);
+}
+
+void my_debug(){
+    put(1,1,'+');
+}
+
 void init(){
     initscr();
     savetty();
@@ -73,12 +83,6 @@ void init_board(){
     }
 }
 
-void put(int row, int col, char ch){
-    board[row][col] = ch;
-    move(row,col);
-    addch(ch);
-}
-
 void change_direction(){
     int keypres;
     keypres = wgetch(stdscr);
@@ -91,7 +95,7 @@ void change_direction(){
     else if(keypres == 'd'){
         direction = RIGHT;
     }
-    else if(keypres == 's'){
+    else if (keypres == 's') {
         direction = DOWN;
     }
     else if(keypres == 'w'){
@@ -109,19 +113,35 @@ void change_head(){
     else if(direction == LEFT){
         snake[0].col--;
     }
-    else if (direction ==UP){
+    else if (direction == UP){
         snake[0].row --;
     }
     else if(direction == DOWN){
-        snake[0].col ++;
+        snake[0].row ++;
     }
+}
+
+int vefity_head(){
+    if (snake[0].row <0 || snake[0].col < 0
+        || snake[0].row >= lines || snake[0].col >= cols ){
+        return -1;
+    }
+    if(board[snake[0].row][snake[0].col] != ' '){
+        return -1;
+    }
+    return 0;
+
 }
 
 void logic(){
     change_direction();
     memmove(&snake[1], &snake[0], sizeof(Coord) * init_snake_size);
     change_head();
-    put(snake[0].row, snake[0].col,POINT);
+//    if(vefity_head()){
+//        direction = STOP;
+//        return;
+//    }
+    put(snake[0].row, snake[0].col, POINT);
     if(init_snake_size < snake_length){
         init_snake_size ++;
     }

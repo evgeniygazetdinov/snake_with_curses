@@ -10,9 +10,11 @@
 #define UP 2
 #define DOWN 3
 #define STOP 4
+#define  INIT_SNAKE_LENGHT 5
 
 // initial snake position//
 int direction = STOP;
+int game_over = 0;
 
 char** board;
 typedef struct Coord{
@@ -62,8 +64,17 @@ void my_finish(){
    exit(0);
 }
 
+void clear_board(){
+    int i,j;
+    for(i=0;i<LINES;i++){
+        for(j=0;j<COLS;j++){
+            board[i][j] = '*';
+        }
+    }
+}
+
 void init_board(){
-    int i, j;
+    int i;
     lines = LINES;
     cols = COLS;
     board = (char**) malloc(LINES * sizeof(char*));
@@ -76,17 +87,24 @@ void init_board(){
             my_finish();
         }
     }
-    for(i=0;i<LINES;i++){
-        for(j=0;j<COLS;j++){
-            board[i][j] = '*';
-        }
-    }
+    clear_board();
+
 }
 
 void change_direction(){
     int keypres;
     keypres = wgetch(stdscr);
     if(keypres == ERR){
+        return;
+    }
+    if(game_over){
+        if(keypres == 'r'){
+            clear_board();
+            snake_length = INIT_SNAKE_LENGHT;
+            init_snake_size = 1;
+            snake[0] = get_random_pos();
+            direction = STOP;
+        }
         return;
     }
     else if(keypres == 'a'){
@@ -137,10 +155,11 @@ void logic(){
     change_direction();
     memmove(&snake[1], &snake[0], sizeof(Coord) * init_snake_size);
     change_head();
-//    if(vefity_head()){
-//        direction = STOP;
-//        return;
-//    }
+    if(vefity_head()){
+        direction = STOP;
+        game_over = 1;
+        return;
+    }
     put(snake[0].row, snake[0].col, POINT);
     if(init_snake_size < snake_length){
         init_snake_size ++;
@@ -159,12 +178,13 @@ int main() {
     put(snake[0].row, snake[0].col, POINT);
     while(1){
         change_direction();
-        if(direction != STOP){
-            logic();
+            if(game_over != STOP && !game_over){
+                logic();
+            }
+            napms(50);
         }
-        wgetch(stdscr);
-        napms(50);
-    }
+//        wgetch(stdscr);
+//
     my_finish();
     endwin();
     return 0;

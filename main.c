@@ -93,31 +93,37 @@ void init_board(){
 
 void change_direction(){
     int keypres;
+
     keypres = wgetch(stdscr);
     if(keypres == ERR){
         return;
     }
-    if(game_over){
+//    if(game_over){
         if(keypres == 'r'){
             clear_board();
             snake_length = INIT_SNAKE_LENGHT;
             init_snake_size = 1;
             snake[0] = get_random_pos();
             direction = STOP;
+            my_debug();
         }
-        return;
-    }
+//        return;
+//    }
     else if(keypres == 'a'){
         direction = LEFT;
+
     }
     else if(keypres == 'd'){
         direction = RIGHT;
+
     }
     else if (keypres == 's') {
         direction = DOWN;
+
     }
     else if(keypres == 'w'){
         direction = UP;
+
     }
     else if(keypres == 'q'){
         my_finish();
@@ -140,6 +146,7 @@ void change_head(){
 }
 
 int vefity_head(){
+    // todo больше обдумать этот метод ошибка скорее всего тут , как сделать так что бы змея не выходила за пределы и нужна правильная обработка флага
     if (snake[0].row <0 || snake[0].col < 0
         || snake[0].row >= lines || snake[0].col >= cols ){
         return -1;
@@ -155,9 +162,8 @@ void logic(){
     change_direction();
     memmove(&snake[1], &snake[0], sizeof(Coord) * init_snake_size);
     change_head();
-    if(vefity_head()){
+    if(!vefity_head()){
         direction = STOP;
-        game_over = 1;
         return;
     }
     put(snake[0].row, snake[0].col, POINT);
@@ -184,7 +190,7 @@ int main() {
             napms(50);
         }
 //        wgetch(stdscr);
-//
+
     my_finish();
     endwin();
     return 0;

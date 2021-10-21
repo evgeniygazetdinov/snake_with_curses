@@ -3,4 +3,4 @@ project(snake_on_clang C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(snake_on_clang main.c)
+add_executable(snake_on_clang not_main.c main.c)

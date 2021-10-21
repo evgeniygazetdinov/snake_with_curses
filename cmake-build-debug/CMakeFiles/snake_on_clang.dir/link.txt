@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/snake_on_clang.dir/main.c.o  -o snake_on_clang 
+/usr/bin/cc -g   CMakeFiles/snake_on_clang.dir/not_main.c.o CMakeFiles/snake_on_clang.dir/main.c.o  -o snake_on_clang 

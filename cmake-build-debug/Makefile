@@ -150,6 +150,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/snake_on_clang.dir/build.make CMakeFiles/snake_on_clang.dir/main.c.s
 .PHONY : main.c.s
 
+not_main.o: not_main.c.o
+
+.PHONY : not_main.o
+
+# target to build an object file
+not_main.c.o:
+	$(MAKE) -f CMakeFiles/snake_on_clang.dir/build.make CMakeFiles/snake_on_clang.dir/not_main.c.o
+.PHONY : not_main.c.o
+
+not_main.i: not_main.c.i
+
+.PHONY : not_main.i
+
+# target to preprocess a source file
+not_main.c.i:
+	$(MAKE) -f CMakeFiles/snake_on_clang.dir/build.make CMakeFiles/snake_on_clang.dir/not_main.c.i
+.PHONY : not_main.c.i
+
+not_main.s: not_main.c.s
+
+.PHONY : not_main.s
+
+# target to generate assembly for a file
+not_main.c.s:
+	$(MAKE) -f CMakeFiles/snake_on_clang.dir/build.make CMakeFiles/snake_on_clang.dir/not_main.c.s
+.PHONY : not_main.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -162,6 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... not_main.o"
+	@echo "... not_main.i"
+	@echo "... not_main.s"
 .PHONY : help
 
 

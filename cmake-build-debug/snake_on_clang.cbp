@@ -81,6 +81,9 @@
 		<Unit filename="/home/evgesha/CLionProjects/snake_on_clang/main.c">
 			<Option target="snake_on_clang"/>
 		</Unit>
+		<Unit filename="/home/evgesha/CLionProjects/snake_on_clang/not_main.c">
+			<Option target="snake_on_clang"/>
+		</Unit>
 		<Unit filename="/home/evgesha/CLionProjects/snake_on_clang/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

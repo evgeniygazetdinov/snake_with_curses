@@ -3,3 +3,5 @@
 
 CMakeFiles/snake_on_clang.dir/main.c.o: ../main.c
 
+CMakeFiles/snake_on_clang.dir/not_main.c.o: ../not_main.c
+

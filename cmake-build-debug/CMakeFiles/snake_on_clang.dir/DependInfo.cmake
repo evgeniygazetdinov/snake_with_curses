@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/evgesha/CLionProjects/snake_on_clang/main.c" "/home/evgesha/CLionProjects/snake_on_clang/cmake-build-debug/CMakeFiles/snake_on_clang.dir/main.c.o"
+  "/home/evgesha/CLionProjects/snake_on_clang/not_main.c" "/home/evgesha/CLionProjects/snake_on_clang/cmake-build-debug/CMakeFiles/snake_on_clang.dir/not_main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

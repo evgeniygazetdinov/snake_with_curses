@@ -1,11 +1,12 @@
 //
 // Created by evgesha on 20.10.2021.
 //
-#include <stdio.h>
 #include <curses.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <signal.h>
+
 
 #define SNAKE_INCREASE 3
 #define COLOR_BLACK 0
@@ -84,7 +85,7 @@ void clear_board(){
     }
 }
 
-clear_board(){
+void init_board(){
     int i;
     lines = LINES;
     cols = COLS;
@@ -197,9 +198,65 @@ void change_head(){
         snake[0].row++;
     }
 }
-// todO 193
+
+int verify_head(){
+    if(snake[0].row < 0 || snake[0].col < 0 ||
+       snake[0].row >= lines || snake[0].col >= cols){
+        return -1;
+    }
+    if(board[snake[0].row][snake[0].col] != ' ' &&
+       board[snake[0].row][snake[0].col] != APPLE){
+        return -1;
+    }
+    return 0;
+}
+void logic(){
+    memmove(&snake[1], &snake[0], sizeof(Coord) * snakeSize);
+    change_head();
+    if(verify_head()){
+        direction = STOP;
+        game_over = 1;
+        return;
+    }
+    if(board[snake[0].row][snake[0].col] == APPLE){
+        snakeLength += SNAKE_INCREASE;
+        put_apple();
+    }
+    attron(COLOR_PAIR(rand() % 8));
+    put(snake[0].row, snake[0].col, POINT);
+    if(snakeSize < snakeLength){
+        snakeSize++;
+    }else{
+        put(snake[snakeSize].row, snake[snakeSize].col, ' ');
+    }
+}
+
+void put_apple(){
+    Coord pos = get_random_pos();
+    attron(COLOR_PAIR(COLOR_YELLOW));
+    put(pos.row, pos.col, APPLE);
+}
 
 int main(){
-
-
+    srand((unsigned) time(NULL));
+    init();
+    init_board();
+    snake[0] = get_random_pos();
+    attron(COLOR_PAIR(COLOR_GREEN));
+    put(snake[0].row, snake[0].col, POINT);
+    put_apple();
+    while(1){
+        if(signal_status){
+            finish();
+        }
+        if(direction != STOP && !game_over){
+            logic();
+        }
+        change_direction();
+        napms(100);
+        change_direction();
+    }
+    finish();
+    endwin();
+    return 0;
 }
